@@ -6,7 +6,7 @@ Organizations:
 
    ID: org0MSP
 
-   MSPDir: org0/msp
+   MSPDir: crypto/org0/msp
 
   - &org1
 
@@ -14,10 +14,10 @@ Organizations:
 
    ID: org1MSP
 
-   MSPDir: org1/msp
+   MSPDir: crypto/org1/msp
 
    AnchorPeers:
-    - Host: peer1-org1
+    - Host: peer1.org1
       Port: 7051
 
   - &org2
@@ -26,10 +26,10 @@ Organizations:
 
    ID: org2MSP
 
-   MSPDir: org2/msp
+   MSPDir: crypto/org2/msp
 
    AnchorPeers:
-      - Host: peer1-org2
+      - Host: peer1.org2
         Port: 7051
 ################################################################################
 #
@@ -210,7 +210,7 @@ Orderer: &OrdererDefaults
     # participation in ordering.
     # NOTE: In the solo case, this should be a one-item list.
     Addresses:
-        - orderer-org0:7050
+        - orderer.org0:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch.
     BatchTimeout: 2s

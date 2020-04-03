@@ -1,7 +1,2 @@
-org0
-org1
-org2
-tls-msp
 channel-artifacts
-tlsca2
-tlsca
+crypto

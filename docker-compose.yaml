@@ -15,7 +15,7 @@ services:
          - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0
          - FABRIC_CA_SERVER_DEBUG=true
       volumes:
-         - ./org0/ca:/tmp/hyperledger/fabric-ca
+         - ./crypto/org0/ca:/tmp/hyperledger/fabric-ca
       ports:
          - 7053:7053
       networks:
@@ -32,7 +32,7 @@ services:
          - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0
          - FABRIC_CA_SERVER_DEBUG=true
       volumes:
-         - ./org1/ca:/tmp/hyperledger/fabric-ca
+         - ./crypto/org1/ca:/tmp/hyperledger/fabric-ca
       ports:
          - 7054:7054
       networks:
@@ -49,7 +49,7 @@ services:
          - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0
          - FABRIC_CA_SERVER_DEBUG=true
       volumes:
-         - ./org2/ca:/tmp/hyperledger/fabric-ca
+         - ./crypto/org2/ca:/tmp/hyperledger/fabric-ca
       ports:
          - 7055:7055
       networks:
