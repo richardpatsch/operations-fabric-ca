@@ -1,9 +1,9 @@
-version: '2'
+version: "2"
 
 services:
   peer1-org1:
     container_name: peer1-org1
-    image: hyperledger/fabric-peer
+    image: hyperledger/fabric-peer:${DOCKER_FABRIC_PEER_VERSION}
     environment:
       - CORE_PEER_ID=peer1-org1
       - CORE_PEER_ADDRESS=peer1-org1:7051
@@ -26,7 +26,7 @@ services:
       - ./org1/peer1:/org1/peer1
   peer2-org1:
     container_name: peer2-org1
-    image: hyperledger/fabric-peer
+    image: hyperledger/fabric-peer:${DOCKER_FABRIC_PEER_VERSION}
     environment:
       - CORE_PEER_ID=peer2-org1
       - CORE_PEER_ADDRESS=peer2-org1:7051
@@ -47,10 +47,10 @@ services:
     volumes:
       - /var/run:/host/var/run
       - ./org1/peer2:/org1/peer2
-  
+
   peer1-org2:
     container_name: peer1-org2
-    image: hyperledger/fabric-peer
+    image: hyperledger/fabric-peer:${DOCKER_FABRIC_PEER_VERSION}
     environment:
       - CORE_PEER_ID=peer1-org2
       - CORE_PEER_ADDRESS=peer1-org2:7051
@@ -73,7 +73,7 @@ services:
       - ./org2/peer1:/org2/peer1
   peer2-org2:
     container_name: peer2-org2
-    image: hyperledger/fabric-peer
+    image: hyperledger/fabric-peer:${DOCKER_FABRIC_PEER_VERSION}
     environment:
       - CORE_PEER_ID=peer2-org2
       - CORE_PEER_ADDRESS=peer2-org2:7051
@@ -94,5 +94,3 @@ services:
     volumes:
       - /var/run:/host/var/run
       - ./org2/peer2:/org2/peer2
-    
-    

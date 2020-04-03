@@ -1,26 +1,26 @@
-version: '2'
+version: "2"
 
 services:
- orderer-org0:
-  container_name: orderer-org0
-  image: hyperledger/fabric-orderer
-  environment:
-    - ORDERER_HOME=/tmp/hyperledger/orderer
-    - ORDERER_HOST=orderer-org0
-    - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
-    - ORDERER_GENERAL_GENESISMETHOD=file
-    - ORDERER_GENERAL_GENESISFILE=/tmp/hyperledger/genesis/genesis.block
-    - ORDERER_GENERAL_LOCALMSPID=org0MSP
-    - ORDERER_GENERAL_LOCALMSPDIR=/tmp/hyperledger/org0/orderer/msp
-    - ORDERER_GENERAL_TLS_ENABLED=true
-    - ORDERER_GENERAL_TLS_CERTIFICATE=/tmp/hyperledger/org0/orderer/tls-msp/signcerts/cert.pem
-    - ORDERER_GENERAL_TLS_PRIVATEKEY=/tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem
-    - ORDERER_GENERAL_TLS_ROOTCAS=[/tmp/hyperledger/org0/orderer/tls-msp/tlscacerts/tls-0-0-0-0-8052.pem]
-    - ORDERER_GENERAL_LOGLEVEL=debug
-    - ORDERER_DEBUG_BROADCASTTRACEDIR=data/logs
-    - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/tmp/hyperledger/org0/orderer/tls-msp/signcerts/cert.pem
-    - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem
-    - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/tmp/hyperledger/org0/orderer/tls-msp/tlscacerts/tls-0-0-0-0-8052.pem]
-  volumes:
-    - ./org0/orderer:/tmp/hyperledger/org0/orderer/
-    - ./channel-artifacts:/tmp/hyperledger/genesis
+  orderer-org0:
+    container_name: orderer-org0
+    image: hyperledger/fabric-orderer:${DOCKER_FABRIC_ORDERER_VERSION}
+    environment:
+      - ORDERER_HOME=/tmp/hyperledger/orderer
+      - ORDERER_HOST=orderer-org0
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/tmp/hyperledger/genesis/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=org0MSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/tmp/hyperledger/org0/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/tmp/hyperledger/org0/orderer/tls-msp/signcerts/cert.pem
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/tmp/hyperledger/org0/orderer/tls-msp/tlscacerts/tls-0-0-0-0-8052.pem]
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - ORDERER_DEBUG_BROADCASTTRACEDIR=data/logs
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/tmp/hyperledger/org0/orderer/tls-msp/signcerts/cert.pem
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/tmp/hyperledger/org0/orderer/tls-msp/tlscacerts/tls-0-0-0-0-8052.pem]
+    volumes:
+      - ./org0/orderer:/tmp/hyperledger/org0/orderer/
+      - ./channel-artifacts:/tmp/hyperledger/genesis

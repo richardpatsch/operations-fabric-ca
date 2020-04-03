@@ -1,9 +1,9 @@
-version: '2'
+version: "2"
 
 services:
   ca-tls:
     container_name: ca-tls
-    image: hyperledger/fabric-ca
+    image: hyperledger/fabric-ca:${DOCKER_FABRIC_CA_VERSION}
     command: sh -c 'fabric-ca-server start -d -b tls-ca-admin:tls-ca-adminpw --port 7052'
     environment:
       - FABRIC_CA_SERVER_HOME=/tmp/hyperledger/fabric-ca/crypto
@@ -17,7 +17,7 @@ services:
       - 7052:7052
   ca-tls-ord:
     container_name: ca-tls-ord
-    image: hyperledger/fabric-ca
+    image: hyperledger/fabric-ca:${DOCKER_FABRIC_CA_VERSION}
     command: sh -c 'fabric-ca-server start -d -b tls-ca-admin:tls-ca-adminpw --port 8052'
     environment:
       - FABRIC_CA_SERVER_HOME=/tmp/hyperledger/fabric-ca/crypto
@@ -29,6 +29,3 @@ services:
       - ./tlsca2:/tmp/hyperledger/fabric-ca
     ports:
       - 8052:8052
-
-
-
