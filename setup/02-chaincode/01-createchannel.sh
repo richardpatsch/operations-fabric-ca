@@ -1,5 +1,6 @@
 #!/bin/bash
-source _variables.sh
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+source $DIR/_variables.sh
 
-#create channel on peer0
-peer channel create -c channel1 -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/channel1.tx -o orderer-org0:7050 --outputBlock /tmp/hyperledger/org1/peer1/assets/mychannel.block --tls --cafile /tmp/hyperledger/org1/peer1/msp/tls-0-0-0-0-8052.pem
+#creat channel on peer1.org1
+docker exec -e $evPeerAddressP1O1 -e $evLocalMspidOrg1 -e $evMspConfigPathOrg1Admin cli peer channel create -c $CHANNEL_NAME -f /opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts/channel1.tx -o $ORDERER_ADDRESS --outputBlock $ChannelBlockPath --tls --cafile $CaFilePeer1Org1
