@@ -1,22 +1,21 @@
-sh 01-enrollCAadmin.sh
+sh ./setup/01-enrollCAadmin.sh
 sleep 5
-sh 02-orgOrd.sh
+sh ./setup/02-orgOrd.sh
 sleep 5
-sh 03-org1.sh
+sh ./setup/03-org1.sh
 sleep 5
-sh 04-org2.sh
+sh ./setup/04-org2.sh
 sleep 5
-sh 05-generateCerts-org1.sh
+sh ./setup/05-generateCerts-org1.sh
 sleep 5
-sh 06-generateCerts-org2.sh
+sh ./setup/06-generateCerts-org2.sh
 sleep 5
-sh 07-generateCerts-ord.sh
+sh ./setup/07-generateCerts-ord.sh
 sleep 5
-sh 08-generateMSP.sh
+sh ./setup/08-generateMSP.sh
 sleep 5
-sh 09-generateChannel.sh
+sh ./setup/09-generateChannel.sh
 
-docker-compose -f docker-compose-peer.yaml up -d 
+docker-compose -f docker-compose-peer.yaml up -d
 docker-compose -f docker-compose-peer-ord.yaml up -d
 docker-compose -f docker-compose-cli.yaml up -d
-
