@@ -1,5 +1,8 @@
 version: "2"
 
+networks:
+   fabric:
+
 services:
    rca-org0:
       container_name: rca-org0
@@ -13,9 +16,11 @@ services:
          - FABRIC_CA_SERVER_DEBUG=true
       volumes:
          - ./org0/ca:/tmp/hyperledger/fabric-ca
-
       ports:
          - 7053:7053
+      networks:
+         - fabric
+
    rca-org1:
       container_name: rca-org1
       image: hyperledger/fabric-ca:${DOCKER_FABRIC_CA_VERSION}
@@ -30,6 +35,8 @@ services:
          - ./org1/ca:/tmp/hyperledger/fabric-ca
       ports:
          - 7054:7054
+      networks:
+         - fabric
 
    rca-org2:
       container_name: rca-org2
@@ -45,3 +52,5 @@ services:
          - ./org2/ca:/tmp/hyperledger/fabric-ca
       ports:
          - 7055:7055
+      networks:
+         - fabric

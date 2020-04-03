@@ -1,5 +1,8 @@
 version: "2"
 
+networks:
+  fabric:
+
 services:
   cli-org1:
     container_name: cli-org1
@@ -24,3 +27,5 @@ services:
       - ./org1/admin:/tmp/hyperledger/org1/admin
       - ./scripts/:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    networks:
+      - fabric

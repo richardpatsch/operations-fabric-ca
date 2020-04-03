@@ -1,5 +1,8 @@
 version: "2"
 
+networks:
+  fabric:
+
 services:
   ca-tls:
     container_name: ca-tls
@@ -15,6 +18,9 @@ services:
       - ./tlsca:/tmp/hyperledger/fabric-ca
     ports:
       - 7052:7052
+    networks:
+      - fabric
+
   ca-tls-ord:
     container_name: ca-tls-ord
     image: hyperledger/fabric-ca:${DOCKER_FABRIC_CA_VERSION}
@@ -29,3 +35,5 @@ services:
       - ./tlsca2:/tmp/hyperledger/fabric-ca
     ports:
       - 8052:8052
+    networks:
+      - fabric

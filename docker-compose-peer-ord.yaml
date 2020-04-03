@@ -1,5 +1,8 @@
 version: "2"
 
+networks:
+  fabric:
+
 services:
   orderer-org0:
     container_name: orderer-org0
@@ -24,3 +27,5 @@ services:
     volumes:
       - ./org0/orderer:/tmp/hyperledger/org0/orderer/
       - ./channel-artifacts:/tmp/hyperledger/genesis
+    networks:
+      - fabric
