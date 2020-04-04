@@ -1,7 +1,7 @@
 CHANNEL_NAME="channel1"
 CC_VERSION=1.0
-CC_NAME=mycontract
-CC_PATH=github.com/hyperledger/fabric-samples/chaincode/chaincode_example02
+CC_NAME=marbles
+CC_PATH=github.com/hyperledger/fabric-samples/chaincode/marbles02/go
 
 evPeerAddressP1O1="CORE_PEER_ADDRESS=peer1.org1:7051"
 evPeerAddressP2O1="CORE_PEER_ADDRESS=peer2.org1:7051"
