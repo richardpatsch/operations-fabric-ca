@@ -24,8 +24,92 @@ services:
       - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/tmp/hyperledger/org0/orderer/tls-msp/signcerts/cert.pem
       - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/tmp/hyperledger/org0/orderer/tls-msp/keystore/key.pem
       - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/tmp/hyperledger/org0/orderer/tls-msp/tlscacerts/tls-0-0-0-0-8052.pem]
+      - ORDERER_KAFKA_TOPIC_REPLICATIONFACTOR=1
     volumes:
       - ./crypto/org0/orderer:/tmp/hyperledger/org0/orderer/
       - ./channel-artifacts:/tmp/hyperledger/genesis
+    networks:
+      - fabric
+
+  kafkaA.org0:
+    container_name: kafkaA.org0
+    image: hyperledger/fabric-kafka:${DOCKER_FABRIC_KAFKA_VERSION}
+    restart: always
+    environment:
+      - KAFKA_MESSAGE_MAX_BYTES=103809024
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=103809024
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=2
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeperA.org0:2181,zookeeperB.org0:2181,zookeeperC.org0:2181
+      - KAFKA_BROKER_ID=0
+    ports:
+      - 9092:9092
+      - 9093:9093
+    depends_on:
+      - zookeeperA.org0
+      - zookeeperB.org0
+      - zookeeperC.org0
+    networks:
+      - fabric
+
+  kafkaB.org0:
+    container_name: kafkaB.org0
+    image: hyperledger/fabric-kafka:${DOCKER_FABRIC_KAFKA_VERSION}
+    restart: always
+    environment:
+      - KAFKA_MESSAGE_MAX_BYTES=103809024
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=103809024
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE
+      - KAFKA_MIN_INSYNC_REPLICAS=2
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=2
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeperA.org0:2181,zookeeperB.org0:2181,zookeeperC.org0:2181
+      - KAFKA_BROKER_ID=1
+    ports:
+      - 10092:9092
+      - 10093:9093
+    networks:
+      - fabric
+    depends_on:
+      - zookeeperA.org0
+      - zookeeperB.org0
+      - zookeeperC.org0
+
+  zookeeperA.org0:
+    container_name: zookeeperA.org0
+    image: hyperledger/fabric-zookeeper:${DOCKER_FABRIC_ZOOKEPER_VERSION}
+    environment:
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=zookeeperA.org0:2888:3888 server.2=zookeeperB.org0:2888:3888 server.3=zookeeperC.org0:2888:3888
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+    networks:
+      - fabric
+
+  zookeeperB.org0:
+    container_name: zookeeperB.org0
+    image: hyperledger/fabric-zookeeper:${DOCKER_FABRIC_ZOOKEPER_VERSION}
+    environment:
+      - ZOO_MY_ID=2
+      - ZOO_SERVERS=server.1=zookeeperA.org0:2888:3888 server.2=zookeeperB.org0:2888:3888 server.3=zookeeperC.org0:2888:3888
+    ports:
+      - 12181:2181
+      - 12888:2888
+      - 13888:3888
+    networks:
+      - fabric
+
+  zookeeperC.org0:
+    container_name: zookeeperC.org0
+    image: hyperledger/fabric-zookeeper:${DOCKER_FABRIC_ZOOKEPER_VERSION}
+    environment:
+      - ZOO_MY_ID=3
+      - ZOO_SERVERS=server.1=zookeeperA.org0:2888:3888 server.2=zookeeperB.org0:2888:3888 server.3=zookeeperC.org0:2888:3888
+    ports:
+      - 22181:2181
+      - 22888:2888
+      - 23888:3888
     networks:
       - fabric
