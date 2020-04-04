@@ -4,7 +4,7 @@ networks:
   fabric:
 
 services:
-  orderer-org0:
+  orderer.org0:
     container_name: orderer.org0
     image: hyperledger/fabric-orderer:${DOCKER_FABRIC_ORDERER_VERSION}
     environment:
