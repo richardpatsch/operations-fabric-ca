@@ -6,7 +6,7 @@ In this case, instead of having only one TLS CA for issue all the TLS certificat
 
 ---
 
-trying to create a offline/prod setup.
+trying to create an offline/prod setup.
 work in progress...
 
 (right now it is still mandatory to have fabric binaries installed locally to set up the MSPs. Procedure will be moved into the CLI container eventually to remove that dependency on the host machine)
