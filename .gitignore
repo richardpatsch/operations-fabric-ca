@@ -1,2 +1,7 @@
 channel-artifacts
 crypto
+baas/azure/sp.json
+yarn-error.log
+.DS_Store
+node_modules
+web-app/server/wallet/admin

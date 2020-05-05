@@ -1,0 +1,31 @@
+{
+  "name": "calorieview",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "fabric-shim": "1.4.5",
+    "uuid": "^8.0.0",
+    "yup": "^0.28.5"
+  },
+  "scripts": {
+    "clean": "rm -rf build",
+    "build-server": "mkdir build && ./node_modules/.bin/babel -d ./build ./app -s",
+    "build": "npm run clean && npm run build-server",
+    "start": "node ./build/index.js",
+    "test": "./node_modules/.bin/mocha --require @babel/register"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/register": "^7.9.0",
+    "@theledger/fabric-mock-stub": "^5.0.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "mocha": "^7.1.2"
+  }
+}

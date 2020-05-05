@@ -1,7 +1,9 @@
 CHANNEL_NAME="channel1"
-CC_VERSION=1.0
-CC_NAME=marbles
-CC_PATH=github.com/hyperledger/fabric-samples/chaincode/marbles02/go
+CC_VERSION=1.4
+CC_NAME=calorieview
+CC_PATH=/opt/gopath/src/github.com/hyperledger/fabric-samples/chaincode/calorieview #absolute path when using language node
+#by default it uses golang and starts at the GO home directory
+CC_LANGUAGE=node #default: golang
 
 evPeerAddressP1O1="CORE_PEER_ADDRESS=peer1.org1:7051"
 evPeerAddressP2O1="CORE_PEER_ADDRESS=peer2.org1:7051"
