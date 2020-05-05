@@ -10,3 +10,10 @@ trying to create an offline/prod setup.
 work in progress...
 
 (right now it is still mandatory to have fabric binaries installed locally to set up the MSPs. Procedure will be moved into the CLI container eventually to remove that dependency on the host machine)
+
+requirements:
+fabric 1.4 binaries
+docker
+docker-compose
+jq (to read cli)
+azure-cli @2.2.0 (2.3.0 does not work for me)
