@@ -1,3 +1,5 @@
+#!/bin/bash
+
 docker-compose -f docker-compose-catls.yaml down
 docker-compose -f docker-compose-cli.yaml down
 docker-compose -f docker-compose-peer-ord.yaml down
