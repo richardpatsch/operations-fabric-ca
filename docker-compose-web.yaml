@@ -1,0 +1,33 @@
+version: '2'
+
+networks:
+  fabric:
+
+services:
+  web-server:
+    container_name: web-server
+    #build: ./web-app/server
+    image: node:10
+    tty: true
+    stdin_open: true
+    #command: sh
+    volumes:
+      - ./web-app/server:/usr/src/app
+      - ./crypto:/usr/src/crypto
+    ports:
+      - 3001:3000
+    networks:
+      - fabric
+
+  web-client:
+    container_name: web-client
+    build:
+      context: ./web-app/client
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
