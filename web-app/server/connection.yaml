@@ -43,7 +43,7 @@ organizations:
     certificateAuthorities:
       - rca-org1
     adminPrivateKey:
-      path: /usr/src/crypto/org1/admin/msp/keystore/f871e3dbc9d959061139d8051350acecfb8c764ec197a2096735f1cd7481474c_sk
+      path: /usr/src/crypto/org1/admin/msp/keystore/5ad229c72188d848d9a8059a6a9a8164e88e3b5836f39b865447cc07b044284a_sk
     signedCert:
       path: /usr/src/crypto/org1/admin/msp/signcerts/cert.pem
 
@@ -55,7 +55,7 @@ organizations:
     certificateAuthorities:
       - rca-org2
     adminPrivateKey:
-      path: /usr/src/crypto/org2/admin/msp/keystore/88d01a73e46a3e8c5a906cb2e76dd52b6fa6a955663bd36a2a4aeb831639bb9d_sk
+      path: /usr/src/crypto/org2/admin/msp/keystore/e0687f8b9a1e029322dd74b14d71ac789282c8b571752c6bd14630c4067e1394_sk
     signedCert:
       path: /usr/src/crypto/org2/admin/msp/signcerts/cert.pem
 orderers:
