@@ -58,3 +58,7 @@ sh $scriptPath/05-invoke.sh
 sleepf 3 "wait for state sync"
 
 sh $scriptPath/06-querycc.sh
+
+sleepf 3 "wait cause reasons"
+
+docker-compose -f docker-compose-web.yaml up -d

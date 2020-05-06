@@ -6,7 +6,6 @@ networks:
 services:
   web-server:
     container_name: web-server
-    #build: ./web-app/server
     image: node:10
     tty: true
     stdin_open: true
