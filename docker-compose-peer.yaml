@@ -1,4 +1,4 @@
-version: "2"
+version: '2'
 
 networks:
   fabric:
@@ -27,6 +27,8 @@ services:
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1:7051
       - CORE_PEER_GOSSIP_SKIPHANDSHAKE=true
+      - CORE_CHAINCODE_LOGGING_LEVEL=INFO
+      - CORE_CHAINCODE_LOGGING_SHIM=INFO
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/org1/peer1
     volumes:
       - /var/run:/host/var/run
@@ -111,6 +113,7 @@ services:
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2:7051
       - CORE_PEER_GOSSIP_SKIPHANDSHAKE=true
+      - CHAINCODE_LOGGING_LEVEL=debug
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/org2/peer1
     volumes:
       - /var/run:/host/var/run
