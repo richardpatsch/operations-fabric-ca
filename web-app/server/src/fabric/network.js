@@ -18,65 +18,64 @@ const filePath = path.join(process.cwd(), '/connection.yaml')
 let fileContents = fs.readFileSync(filePath, 'utf8')
 let connectionFile = yaml.safeLoad(fileContents)
 
-// create car transaction
-exports.createCar = async function (key, make, model, color, owner) {
+async function getGatewayAndContract() {
+  // Create a new file system based wallet for managing identities.
+  const walletPath = path.join(process.cwd(), '/wallet')
+  const wallet = new FileSystemWallet(walletPath)
+  console.log(`Wallet path: ${walletPath}`)
+
+  // Check to see if we've already enrolled the user.
+  const userExists = await wallet.exists(userName)
+  if (!userExists) {
+    console.log(
+      'An identity for the user ' + userName + ' does not exist in the wallet'
+    )
+    console.log('Run the registerUser.js application before retrying')
+    response.error =
+      'An identity for the user ' +
+      userName +
+      ' does not exist in the wallet. Register ' +
+      userName +
+      ' first'
+    return response
+  }
+
+  const gateway = new Gateway()
+  await gateway.connect(connectionFile, {
+    wallet,
+    identity: userName,
+    discovery: gatewayDiscovery,
+  })
+
+  // Get the network (channel) our contract is deployed to.
+  const network = await gateway.getNetwork('channel1')
+
+  // Get the contract from the network.
+  const contract = network.getContract('calorieview')
+
+  return { gateway, contract }
+}
+
+exports.createFood = async function (quantity, name, best_before) {
   try {
     var response = {}
 
-    // Create a new file system based wallet for managing identities.
-    const walletPath = path.join(process.cwd(), '/wallet')
-    const wallet = new FileSystemWallet(walletPath)
-    console.log(`Wallet path: ${walletPath}`)
-
-    // Check to see if we've already enrolled the user.
-    const userExists = await wallet.exists(userName)
-    if (!userExists) {
-      console.log(
-        'An identity for the user ' + userName + ' does not exist in the wallet'
-      )
-      console.log('Run the registerUser.js application before retrying')
-      response.error =
-        'An identity for the user ' +
-        userName +
-        ' does not exist in the wallet. Register ' +
-        userName +
-        ' first'
-      return response
-    }
-
-    // Create a new gateway for connecting to our peer node.
-    console.log('we here in createCar')
-
-    const gateway = new Gateway()
-    await gateway.connect(connectionFile, {
-      wallet,
-      identity: userName,
-      discovery: gatewayDiscovery,
-    })
-
-    // Get the network (channel) our contract is deployed to.
-    const network = await gateway.getNetwork('mychannel')
-
-    // Get the contract from the network.
-    const contract = network.getContract('fabcar')
-
-    // Submit the specified transaction.
-    // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
+    const { gateway, contract } = await getGatewayAndContract()
 
     await contract.submitTransaction(
-      'createCar',
-      key,
-      make,
-      model,
-      color,
-      owner
+      'createFood',
+      JSON.stringify({
+        quantity,
+        name,
+        best_before,
+      })
     )
     console.log('Transaction has been submitted')
 
     // Disconnect from the gateway.
     await gateway.disconnect()
 
-    response.msg = 'createCar Transaction has been submitted'
+    response.msg = 'createFood Transaction has been submitted'
     return response
   } catch (error) {
     console.error(`Failed to submit transaction: ${error}`)
@@ -85,56 +84,24 @@ exports.createCar = async function (key, make, model, color, owner) {
   }
 }
 
-// change car owner transaction
-exports.changeCarOwner = async function (key, newOwner) {
+exports.transferFood = async function (id, to) {
   try {
     var response = {}
+    const { gateway, contract } = await getGatewayAndContract()
 
-    // Create a new file system based wallet for managing identities.
-    const walletPath = path.join(process.cwd(), '/wallet')
-    const wallet = new FileSystemWallet(walletPath)
-    console.log(`Wallet path: ${walletPath}`)
-
-    // Check to see if we've already enrolled the user.
-    const userExists = await wallet.exists(userName)
-    if (!userExists) {
-      console.log(
-        'An identity for the user ' + userName + ' does not exist in the wallet'
-      )
-      console.log('Run the registerUser.js application before retrying')
-      response.error =
-        'An identity for the user ' +
-        userName +
-        ' does not exist in the wallet. Register ' +
-        userName +
-        ' first'
-      return response
-    }
-
-    // Create a new gateway for connecting to our peer node.
-    const gateway = new Gateway()
-
-    await gateway.connect(connectionFile, {
-      wallet,
-      identity: userName,
-      discovery: gatewayDiscovery,
-    })
-
-    // Get the network (channel) our contract is deployed to.
-    const network = await gateway.getNetwork('mychannel')
-
-    // Get the contract from the network.
-    const contract = network.getContract('fabcar')
-
-    // Submit the specified transaction.
-    // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR10', 'Dave')
-    await contract.submitTransaction('changeCarOwner', key, newOwner)
+    await contract.submitTransaction(
+      'transferFood',
+      JSON.stringify({
+        id,
+        to,
+      })
+    )
     console.log('Transaction has been submitted')
 
     // Disconnect from the gateway.
     await gateway.disconnect()
 
-    response.msg = 'changeCarOwner Transaction has been submitted'
+    response.msg = 'transferFood Transaction has been submitted'
     return response
   } catch (error) {
     console.error(`Failed to submit transaction: ${error}`)
@@ -143,60 +110,58 @@ exports.changeCarOwner = async function (key, newOwner) {
   }
 }
 
-// query all cars transaction
-exports.queryAllCars = async function () {
+exports.queryAllFoods = async function () {
   try {
-    console.log('starting to queryAllCars')
-
     var response = {}
 
-    // Create a new file system based wallet for managing identities.
-    const walletPath = path.join(process.cwd(), '/wallet')
-    const wallet = new FileSystemWallet(walletPath)
-    console.log(`Wallet path: ${walletPath}`)
+    const { gateway, contract } = await getGatewayAndContract()
 
-    // Check to see if we've already enrolled the user.
-    const userExists = await wallet.exists(userName)
-    if (!userExists) {
-      console.log(
-        'An identity for the user ' + userName + ' does not exist in the wallet'
-      )
-      console.log('Run the registerUser.js application before retrying')
-      response.error =
-        'An identity for the user ' +
-        userName +
-        ' does not exist in the wallet. Register ' +
-        userName +
-        ' first'
-      return response
-    }
-
-    // Create a new gateway for connecting to our peer node.
-    const gateway = new Gateway()
-
-    await gateway.connect(connectionFile, {
-      wallet,
-      identity: userName,
-      discovery: gatewayDiscovery,
-    })
-
-    // Get the network (channel) our contract is deployed to.
-    const network = await gateway.getNetwork('mychannel')
-
-    // Get the contract from the network.
-    const contract = network.getContract('fabcar')
-
-    // Evaluate the specified transaction.
-    // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-    const result = await contract.evaluateTransaction('queryAllCars')
-
-    console.log(
-      `Transaction has been evaluated, result is: ${result.toString()}`
+    response = await contract.submitTransaction(
+      'richQuery',
+      JSON.stringify({
+        selector: {
+          docType: 'food',
+        },
+      })
     )
 
-    return result
+    console.log('Transaction has been submitted')
+
+    // Disconnect from the gateway.
+    await gateway.disconnect()
+
+    response.msg = 'queryFood Transaction has been submitted'
+    return response
   } catch (error) {
-    console.error(`Failed to evaluate transaction: ${error}`)
+    console.error(`Failed to submit transaction: ${error}`)
+    response.error = error.message
+    return response
+  }
+}
+
+exports.queryAllDeliveries = async function () {
+  try {
+    var response = {}
+
+    const { gateway, contract } = await getGatewayAndContract()
+
+    response = await contract.submitTransaction(
+      'richQuery',
+      JSON.stringify({
+        selector: {
+          docType: 'delivery',
+        },
+      })
+    )
+    contract.console.log('Transaction has been submitted')
+
+    // Disconnect from the gateway.
+    await gateway.disconnect()
+
+    response.msg = 'queryFood Transaction has been submitted'
+    return response
+  } catch (error) {
+    console.error(`Failed to submit transaction: ${error}`)
     response.error = error.message
     return response
   }
