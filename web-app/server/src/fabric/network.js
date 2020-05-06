@@ -153,7 +153,7 @@ exports.queryAllDeliveries = async function () {
         },
       })
     )
-    contract.console.log('Transaction has been submitted')
+    console.log('Transaction has been submitted')
 
     // Disconnect from the gateway.
     await gateway.disconnect()
