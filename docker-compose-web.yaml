@@ -10,24 +10,26 @@ services:
     image: node:10
     tty: true
     stdin_open: true
-    #command: sh
+    working_dir: /usr/src/app
+    command: "sh -c 'sh ./updateKeystore.sh && node enrollAdmin.js && npm install && npm start'"
     volumes:
       - ./web-app/server:/usr/src/app
       - ./crypto:/usr/src/crypto
+    environment:
+      - PORT=4000
     ports:
-      - 3001:3000
+      - 4000:4000
     networks:
       - fabric
-
-  web-client:
-    container_name: web-client
-    build:
-      context: ./web-app/client
-      dockerfile: Dockerfile
-    volumes:
-      - '.:/app'
-      - '/app/node_modules'
-    ports:
-      - 3001:3000
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+#  web-client:
+#    container_name: web-client
+#    build:
+#      context: ./web-app/client
+#      dockerfile: Dockerfile
+#    volumes:
+#      - '.:/app'
+#      - '/app/node_modules'
+#    ports:
+#s     - 3001:3000
+#    environment:
+#      - CHOKIDAR_USEPOLLING=true
