@@ -10,7 +10,7 @@ services:
     tty: true
     stdin_open: true
     working_dir: /usr/src/app
-    command: "sh -c 'sh ./updateKeystore.sh && node enrollAdmin.js && npm install && npm start'"
+    command: "sh -c 'rm -rf  wallet/admin && sh ./updateKeystore.sh && node enrollAdmin.js && npm install && npm start'"
     volumes:
       - ./web-app/server:/usr/src/app
       - ./crypto:/usr/src/crypto
