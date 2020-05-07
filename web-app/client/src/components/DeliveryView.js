@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactLoading from 'react-loading'
+import FancyDeliveryTable from './FancyDeliveryTable'
 import { useFetch } from '../utils/hooks'
 
 export default function DeliveryView() {
@@ -10,7 +11,7 @@ export default function DeliveryView() {
     backgroundColor: 'rgba(255,255,255,.5)',
   }
 
-  const [data, loading] = useFetch('http://localhost:4000/queryAllFoods')
+  const [data, loading] = useFetch('http://localhost:4000/queryAllDeliveries')
 
   return (
     <div style={style}>
@@ -30,7 +31,7 @@ export default function DeliveryView() {
           <b>Loading All Delivery Records...</b>
         </div>
       ) : (
-        <h3>loaded yo</h3>
+        <FancyDeliveryTable data={data} />
       )}
     </div>
   )

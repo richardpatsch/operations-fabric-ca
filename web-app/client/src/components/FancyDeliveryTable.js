@@ -10,8 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 
 const columns = [
-  { id: 'id', label: 'ID', minWidth: 140 },
-  { id: 'name', label: 'Name', minWidth: 60 },
+  { id: 'id', label: 'Id', minWidth: 140 },
   {
     id: 'supplier',
     label: 'supplier',
@@ -20,32 +19,11 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'best_before',
-    label: 'Best Before',
+    id: 'dateOfProposalCreation',
+    label: 'Delivery Date',
     minWidth: 120,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'hops',
-    label: 'Hops',
-    minWidth: 50,
-    align: 'right',
-    format: (value) => value.toFixed(2),
-  },
-  {
-    id: 'owner',
-    label: 'Owner',
-    minWidth: 50,
-    align: 'right',
-    format: (value) => value.toFixed(2),
-  },
-  {
-    id: 'deliveryId',
-    label: 'Delivery',
-    minWidth: 200,
-    align: 'right',
-    format: (value) => value.toFixed(2),
   },
 ]
 
@@ -58,7 +36,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function FancyFoodTable(props) {
+export default function FancyDelivery(props) {
   const classes = useStyles()
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
