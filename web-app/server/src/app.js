@@ -36,7 +36,7 @@ app.post('/createFood', (req, res) => {
 
 app.post('/transferFood', (req, res) => {
   console.log(req.body)
-  network.createFood(req.body.id, req.body.to).then((response) => {
+  network.transferFood(req.body.id, req.body.to).then((response) => {
     console.log(response)
     res.send(response)
   })
